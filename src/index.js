@@ -137,6 +137,7 @@ export default class RNPickerSelect extends PureComponent {
         this.onValueChange = this.onValueChange.bind(this);
         this.onOrientationChange = this.onOrientationChange.bind(this);
         this.setInputRef = this.setInputRef.bind(this);
+        this.setAndroidPickerRef = this.setAndroidPickerRef.bind(this);
         this.togglePicker = this.togglePicker.bind(this);
         this.renderInputAccessoryView = this.renderInputAccessoryView.bind(this);
     }
@@ -199,6 +200,10 @@ export default class RNPickerSelect extends PureComponent {
 
     setInputRef(ref) {
         this.inputRef = ref;
+    }
+
+    setAndroidPickerRef(ref) {
+        this.androidPickerRef = ref;
     }
 
     getPlaceholderStyle() {
@@ -424,6 +429,7 @@ export default class RNPickerSelect extends PureComponent {
                         this.togglePicker(true);
                     }}
                     activeOpacity={1}
+                    hitSlop={{ top: 10, bottom: 10, left: 0, right: 100 }}
                     {...touchableWrapperProps}
                 >
                     {this.renderTextInputOrChildren()}
@@ -479,6 +485,7 @@ export default class RNPickerSelect extends PureComponent {
         const { selectedItem } = this.state;
 
         const Component = fixAndroidTouchableBug ? View : TouchableOpacity;
+
         return (
             <Component
                 testID="android_touchable_wrapper"
@@ -498,6 +505,7 @@ export default class RNPickerSelect extends PureComponent {
                         enabled={!disabled}
                         onValueChange={this.onValueChange}
                         selectedValue={selectedItem.value}
+                        ref={this.setAndroidPickerRef}
                         {...pickerProps}
                     >
                         {this.renderPickerItems()}
